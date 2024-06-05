@@ -18,6 +18,7 @@
 */
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // I use Physics.gravity a lot instead of Vector3.up because you can point the gravity to a different direction and i want the controller to work fine
@@ -52,6 +53,11 @@ public class SFPSC_PlayerMovement : MonoBehaviour
 
         TryGetWallRun();
         TryGetGrapplingHook();
+
+        //************* Instantiate the OSC Handler...
+        OSCHandler.Instance.Init();
+        OSCHandler.Instance.SendMessageToClient("pd", "/unity/playseq", 1);
+        //*************
     }
 
     public void TryGetWallRun()
