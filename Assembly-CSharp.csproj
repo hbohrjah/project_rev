@@ -60,8 +60,8 @@
   <ItemGroup>
     <Compile Include="Assets\OSC\OSCMessage.cs" />
     <Compile Include="Assets\OSC\OSCClient.cs" />
-    <Compile Include="Assets\OSC\OSCReciever.cs" />
     <Compile Include="Assets\OSC\OSCServer.cs" />
+    <Compile Include="Assets\OSC\OSCReciever.cs" />
     <Compile Include="Assets\OSC\OSCBundle.cs" />
     <Compile Include="Assets\Simple FPS Controller\Scripts\SFPSC_PlayerMovement.cs" />
     <Compile Include="Assets\OSCHandler.cs" />
