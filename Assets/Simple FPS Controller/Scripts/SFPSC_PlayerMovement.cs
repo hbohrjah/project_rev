@@ -35,6 +35,8 @@ public class SFPSC_PlayerMovement : MonoBehaviour
     public float runSpeed = 12.0f;
     public float changeInStageSpeed = 10.0f; // Lerp from walk to run and backwards speed
     public float maximumPlayerSpeed = 150.0f;
+
+    public float downwardVelocity;
     [HideInInspector] public float vInput, hInput;
     public Transform groundChecker;
     public float groundCheckerDist = 0.2f;
@@ -142,8 +144,11 @@ public class SFPSC_PlayerMovement : MonoBehaviour
 
             // OSC isflying
             OSCHandler.Instance.SendMessageToClient("pd", "/unity/notgrounded", 1);
+
+
         }
-            
+        downwardVelocity = Mathf.Abs(rb.velocity.y);
+        OSCHandler.Instance.SendMessageToClient("pd", "/unity/fallingvelocity", downwardVelocity); 
     }
 
     private static Vector3 ClampSqrMag(Vector3 vec, float sqrMag)
