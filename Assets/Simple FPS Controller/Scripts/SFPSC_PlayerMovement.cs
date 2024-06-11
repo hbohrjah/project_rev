@@ -100,6 +100,26 @@ public class SFPSC_PlayerMovement : MonoBehaviour
             return;
         inputForce = (transform.forward * vInput + transform.right * hInput).normalized * (Input.GetKey(SFPSC_KeyManager.Run) ? runSpeed : walkSpeed);
 
+        // OSC ismoving
+        if(inputForce != Vector3.zero)
+        {
+            OSCHandler.Instance.SendMessageToClient("pd", "/unity/ismoving", 1);
+        }
+        else
+        {
+            OSCHandler.Instance.SendMessageToClient("pd", "/unity/ismoving", 0);
+        }
+
+        // OSC isgaming
+        if((wallRun != null && wallRun.IsWallRunning) || (grapplingHook != null && grapplingHook.IsGrappling))
+        {
+            OSCHandler.Instance.SendMessageToClient("pd", "/unity/isgaming", 1);
+        }
+        else
+        {
+            OSCHandler.Instance.SendMessageToClient("pd", "/unity/isgaming", 0);
+        }
+
         if (isGrounded)
         {
             // Jump
@@ -111,10 +131,19 @@ public class SFPSC_PlayerMovement : MonoBehaviour
             }
             // Ground controller
             rb.velocity = Vector3.Lerp(rb.velocity, inputForce, changeInStageSpeed * Time.fixedDeltaTime);
+
+            // OSC isflying
+            OSCHandler.Instance.SendMessageToClient("pd", "/unity/notgrounded", 0);
         }
         else
+        {
             // Air control
             rb.velocity = ClampSqrMag(rb.velocity + inputForce * Time.fixedDeltaTime, rb.velocity.sqrMagnitude);
+
+            // OSC isflying
+            OSCHandler.Instance.SendMessageToClient("pd", "/unity/notgrounded", 1);
+        }
+            
     }
 
     private static Vector3 ClampSqrMag(Vector3 vec, float sqrMag)
