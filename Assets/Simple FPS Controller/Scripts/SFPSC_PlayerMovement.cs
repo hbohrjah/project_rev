@@ -106,6 +106,7 @@ public class SFPSC_PlayerMovement : MonoBehaviour
         if(inputForce != Vector3.zero)
         {
             OSCHandler.Instance.SendMessageToClient("pd", "/unity/ismoving", 1);
+
         }
         else
         {
@@ -136,6 +137,9 @@ public class SFPSC_PlayerMovement : MonoBehaviour
 
             // OSC isflying
             OSCHandler.Instance.SendMessageToClient("pd", "/unity/notgrounded", 0);
+
+            // OSC for walking 
+            OSCHandler.Instance.SendMessageToClient("pd", "/unity/isgrounded", 1);
         }
         else
         {
@@ -144,6 +148,9 @@ public class SFPSC_PlayerMovement : MonoBehaviour
 
             // OSC isflying
             OSCHandler.Instance.SendMessageToClient("pd", "/unity/notgrounded", 1);
+
+            // OSC for walking 
+            OSCHandler.Instance.SendMessageToClient("pd", "/unity/isgrounded", 0);
 
 
         }
