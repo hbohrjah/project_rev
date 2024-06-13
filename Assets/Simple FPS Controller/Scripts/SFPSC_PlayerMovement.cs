@@ -46,6 +46,8 @@ public class SFPSC_PlayerMovement : MonoBehaviour
     public float jumpCooldown = 1.0f;
     private bool jumpBlocked = false;
 
+    private bool walkingSoundPlaying = false;
+
     private SFPSC_WallRun wallRun;
     private SFPSC_GrapplingHook grapplingHook;
 
@@ -107,10 +109,24 @@ public class SFPSC_PlayerMovement : MonoBehaviour
         {
             OSCHandler.Instance.SendMessageToClient("pd", "/unity/ismoving", 1);
 
+            if(walkingSoundPlaying != true)
+            {
+                OSCHandler.Instance.SendMessageToClient("pd", "/unity/walking", 1);
+                walkingSoundPlaying = true;
+            }
+
+
         }
         else
         {
             OSCHandler.Instance.SendMessageToClient("pd", "/unity/ismoving", 0);
+
+            if(walkingSoundPlaying == true)
+            {
+                OSCHandler.Instance.SendMessageToClient("pd", "/unity/walking", 0);
+                walkingSoundPlaying = false;
+            }
+
         }
 
         // OSC isgaming
